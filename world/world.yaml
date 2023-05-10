@@ -1,0 +1,9 @@
+properties: {}
+layers:
+  - name: ["static", "no_laser"]
+    map: "maze.yaml"
+    color: [1.0, 1.0, 1.0, 1]
+models:
+  - name: serp
+    model: "serp.model.yaml"
+    pose: [0.0, 0.0, -1.57079632679]
