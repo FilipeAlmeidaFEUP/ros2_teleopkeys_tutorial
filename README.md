@@ -12,4 +12,22 @@ A fork of Flatland modified to work on ROS 2 natively is available on [this repo
 
 ### Workspace setup
 
-To be able to build all the dependencies and run your projects, ROS needs to a designated folder known as the workspace.
+To be able to build all the dependencies and run your projects, ROS needs to a designated folder known as the workspace. To setup your workspace follow the oficial [ROS 2 tutorial on how to create a workspace](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html).
+
+## Clone the repository
+
+After everything is setup, run the following commands inside your ROS 2 workspace folder to clone the repository:
+
+```
+cd src/
+git clone https://github.com/FilipeAlmeidaFEUP/ros2_teleopkeys_tutorial.git
+```
+
+## Building and installing dependencies
+
+Before running the project for the first time, first you need to execute all these commands:
+
+1. Resolve dependencies: `rosdep install -i --from-path src --rosdistro humble -y`
+2. Build the workspace:`colcon build`
+3. Source the setup script:`source install/setup.bash`
+
