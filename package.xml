@@ -7,6 +7,7 @@
   <maintainer email="filipe.almeida.18@gmail.com">filipe</maintainer>
   <license>TODO: License declaration</license>
 
+  <!-- write all your dependencies here -->
   <exec_depend>rclpy</exec_depend>
   <exec_depend>flatland_msgs</exec_depend>
 

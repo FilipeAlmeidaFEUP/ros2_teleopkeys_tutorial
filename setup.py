@@ -6,7 +6,9 @@ package_name = 'serp_teleop'
 setup(
     name=package_name,
     version='0.0.0',
+    # Packages to export
     packages=[package_name],
+    # Files we want to install, specifically launch files
     data_files=[
         ('share/' + package_name, ['package.xml']),
         ('share/' + package_name + "/launch/", glob("launch/*launch*")),
@@ -22,6 +24,7 @@ setup(
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
+    # Declare the enry point for your python scripts
     entry_points={
         'console_scripts': [
             'serp_teleop = serp_teleop.__init__:main'

@@ -1,6 +1,6 @@
 # Flatland Teleopkeys Tutorial using ROS 2
 
-This tutorial will show you how it is possible to use ROS 2 and the Flatland Simulator to create a simulated world with a robot and how to control it using the keyboard. It also briefly explains how these tools function but, if you wish to learn more about them, please visit the [ROS 2 Documentation](https://docs.ros.org/en/humble/) and the [Flatland Documentation](https://flatland-simulator.readthedocs.io/en/latest/). All the code in this project is written in python.
+This tutorial will show you how it is possible to use ROS 2 and the Flatland Simulator to create a simulated world with a robot and how to control it using the keyboard. It also briefly explains how these tools function but, if you wish to learn more about them, please visit the [ROS 2 Documentation](https://docs.ros.org/en/humble/) and the [Flatland Documentation](https://flatland-simulator.readthedocs.io/en/latest/). All the code in this tutorial is written in python.
 
 # Setup and Pre-requisites
 
@@ -58,7 +58,7 @@ Right now you are seeing the robot move inside the map built for this package bu
 - Scroll up/down: zoom in/out.
 - Left click + drag: rotate the window.
 
-The window on the left called Displays allows you to control some aspects of the visualization. For example, try to unselect the checkbox called `LaserScan (kinect)`. Once you do, the red squares around the robot will disappear. These squares were representing the the collisions from the robot's radar with the walls. Turning this off does not mean the radar is no longer working, only that it is not appearing in the visualization.
+The window on the left called Displays allows you to control some aspects of the visualization. For example, try to unselect the checkbox called `LaserScan (kinect)`. Once you do, the red squares around the robot will disappear. These squares were representing the the collisions from the robots radar with the walls. Turning this off does not mean the radar is no longer working, only that it is not appearing in the visualization.
 
 For now, the robot can not be controlled with the keyboard. It moves forward until detects a wall in front of it using its radar. When a wall is detected, it randomly chooses one direction to rotate 90º, essentially following a random path. The next section will briefly explain how a Flatland ROS 2 package is structured. If you wish to skip this part and go directly to the keyboard control, go to [this section](#keyboard-control).
 
@@ -70,82 +70,28 @@ To help you understand the structure of ROS, take a quick look in the documentat
 
 ### Launch file
 
-ROS 2 provides the `run` run command that starts one node but, in some cases, like in this package, you might want to start several nodes at once. To do that you can use a launch file such as the `launch/serp_teleop.launch.py` in this repository. For more information on this type of file, consult the documentation on [creating launch files](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html). A total of 4 nodes are launched by this file but, for now, lets focus on only 2:
+ROS 2 provides the `run` run command that starts one node but, in some cases, like in this package, you might want to start several nodes at once. To do that you can use a launch file such as the [serp_teleop.launch.py](launch/serp_teleop.launch.py) in this repository. For more information on this type of file, consult the documentation on [creating launch files](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html). A total of 4 nodes are launched by this file but, for now, lets focus on only 2:
 
-- The `flatland_server` node: runs the Flatland simulation, including the robot and the world.
+- The `flatland_server` node: runs the Flatland simulation, including the robot and the world. This node has several arguments that modify the functioning of the simulator. For a more detailed explanation on these parameters go to Flatland documentation on [how to launch Flatland server node](https://flatland-simulator.readthedocs.io/en/latest/core_functions/ros_launch.html#).
 
-```
-ld = LaunchDescription(
-    [
-        DeclareLaunchArgument(name="world_path", default_value=PathJoinSubstitution([pkg_share, "world/world.yaml"])),
-        DeclareLaunchArgument(name="update_rate", default_value="100.0"),
-        DeclareLaunchArgument(name="step_size", default_value="0.01"),
-        DeclareLaunchArgument(name="show_viz", default_value="true"),
-        DeclareLaunchArgument(name="viz_pub_rate", default_value="30.0"),
-        DeclareLaunchArgument(name="use_sim_time", default_value="true"),
+- The `serp_teleop` node: runs the code in the file [\_\_init\_\_.py](serp_teleop/__init__.py) that is used to control the robot. This node needs to have an instance of the class `rclpy.node.Node` created and initialized. This can be done by:
 
-        [...]
+### Using Topics and Services
 
-        # launch flatland server
-        Node(
-            name="flatland_server",
-            package="flatland_server",
-            executable="flatland_server",
-            output="screen",
-            parameters=[
-                # Use the arguments passed into the launchfile for this node
-                {"world_path": world_path},
-                {"update_rate": update_rate},
-                {"step_size": step_size},
-                {"show_viz": show_viz},
-                {"viz_pub_rate": viz_pub_rate},
-                {"use_sim_time": use_sim_time},
-            ],
-        ),
-        [...]
-    ]
-)
-```
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-This node has several arguments that modify the functioning of the simulator. For a more detailed explanation on these parameters go to Flatland documentation on [how to launch Flatland server node](https://flatland-simulator.readthedocs.io/en/latest/core_functions/ros_launch.html#).
+Before you can use topics and services, you need an initialized instance of the `rclpy.node.Node` class. This can be achieved in several ways, such as:
 
-- The `serp_teleop` node: runs the code in the file `serp_teleop/__init__.py` that is used to control the robot.
-
-```
-ld = LaunchDescription(
-    [
-        [...]
-        Node(
-            name="serp_teleop",
-            package="serp_teleop",
-            executable="serp_teleop",
-            output="screen",
-        ),
-        [...]
-    ]
-)
-```
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-This node needs to have an instance of the class `rclpy.node.Node` created and initialized. This can be done by:
-
+1. Using `rclpy.create_node`:
 ```
 node = rclpy.create_node('node_name')
 ```
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-In this package this is achieved by creating a class that inherits from the `rclpy.node.Node` class and initializing it:
-
+2. Creating a class that inherits from the `Node` and accessing as `self` inside the class (used in this package): 
 ```
 class NewNode(Node):
     def __init__(self) -> None:
         super().__init__("node_name")
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 Both methods are equally valid but the second one might be better to keep the code organized in more complex projects. For any other code examples in this tutorial, consider the variable `node` as an initialized instance of the `rclpy.node.Node` class.
-
-### Using Topics and Services
 
 The `flatland_server` node publishes to several topics the `serp_teleop` node needs to subscribe to. To do so, the following code is necessary for each subscription:
 
@@ -153,11 +99,10 @@ The `flatland_server` node publishes to several topics the `serp_teleop` node ne
 #create a subscription
 node.create_subscription(Msg_Type, "/topic_name", handling_function, queue_size)
 
-#each time a message is published, this function is executed and the arg data is the msg 
+#each time a message is published, this function is executed and the arg data is the message as a Msg_Type instance
 def handling_function(data):
     [...]
 ```
-
 
 The `flatland_server` also subscribes to some topics the `serp_teleop` node will publish to. The following code shows how a message can be subscribed to a topic:
 
@@ -181,46 +126,83 @@ client.call_async(request)
 
 NOTE: Msg_Type is only a placeholder for these examples and each topic has a different format to their messages. For each case look for the proper documentation to help you.
 
+ROS 2 provides several commands to to help you see details about every communication between nodes inside the ROS 2 platform. With the package running, you can experiment with the following commands:
+
+1. List of active nodes/topics/services:
+```
+ros2 node list
+ros2 topic list
+ros2 service list
+```
+
+2. Information about all subscribers,publishers and services (servers and clients) of an active node:
+```
+ros2 node info node_name
+```
+
+3. Print all messages published to a topic:
+```
+ros2 topic echo topic_name
+```
+
 ### Other setup files
 
 Although most setup files don't require a lot of attention and are very simple, there are some canfigurations that you need to check in your packages.
 
-One of them is to chech that you have all the dependencies in the `package.xml` file. For example, in this project:
- ```
-<exec_depend>rclpy</exec_depend>
-<exec_depend>flatland_msgs</exec_depend>
- ```
+One of them is to chech that you have all the dependencies in the [package.xml](package.xml) file. 
 
-You also need to pay some attention to the `setup.py` file. Check that all the files that need to be installed are in the `data_files` list:
+You also may need to pay some attention to the [setup.py](setup.py) file. To help you build this file in future packages look at the example with comments on this project or for a more detailed explanation go to the [guide on how to develop a ROS 2 python package](https://docs.ros.org/en/humble/How-To-Guides/Developing-a-ROS-2-Package.html#python-packages).
 
-```
-setup(
-    [...]
-    data_files=[
-        ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + "/launch/", glob("launch/*launch*")),
-        ('share/' + package_name + "/rviz/", glob("rviz/*")),
-        ('share/' + package_name + "/world/" , glob('world/*')),
-        ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
-    ],
-    [...]
-)
-```
+## Flatland
 
-Also make sure you have a proper entry point for you node to start running:
+Flatland configures its worlds through the use of YAML files. These files follow a simple structure that should be simple to understand just by looking at the examples provided in this repository. If you need any extra help, take a look at the [YAML Syntax](https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html).
 
-```
-setup(
-    [...]
-    entry_points={
-        'console_scripts': [
-            'serp_teleop = serp_teleop.__init__:main'
-        ],
-    },
-)
-```
+### World file
 
-For more information on the `setup.py` file go to the [guide on how to develop a ROS 2 python package](https://docs.ros.org/en/humble/How-To-Guides/Developing-a-ROS-2-Package.html#python-packages).
+The [world.yaml](world/world.yaml) file is where the Flatland world is configured and is souced directly by the launch file. 
+
+To understand this file, you need to be familiar with the concept of layers. This makes Flatland essentially a 2.5D simulator since each layer can contain different components of the fworld that work independently in terms of physics. This means objects in different layers won't collide with each other. The world file can configure up to 16 layers and each of them is configured in their [own file](#layer-file). 
+
+There is also a list of models that are icluded in the world. Each one needs a name, the initial position and their [own configuration file](#model-file)
+
+For more information on how to configure this file go to the [configuring world page](https://flatland-simulator.readthedocs.io/en/latest/core_functions/world.html) of the documentation.
+
+### Layer file
+
+In this package there is only one layer, configured in the file [maze.yaml](world/maze.yaml). This configuration works by taking an image ([maze.png](world/maze.png)) and using a threshold to turn it into a binary image. It then builds a map by placing walls where the image transitions from 0 to 1 or 1 to 0.
+
+Another possible configuration for this file is to manually define line segments in a .dat file and use it to define the walls of the map.
+
+For more information on how to configure this file go to the [configuring layers page](https://flatland-simulator.readthedocs.io/en/latest/core_functions/layers.html) of the documentation.
+
+### Model file
+
+Each model needs their own configuration file. In this package you can look at the example from the SERP robot simulation model in the file [serp.model.yaml](world/serp.model.yaml).
+
+This files starts by by defining a list of bodies with predefined shapes or costomizable polygons that create the shape of the model. It can also have a list of joints to connect the bodies.
+
+For the model to interact with the world, it needs to configure a list plugins. Flatland offers several built-in plugins that usually interact with topics. Of those, the SERP model uses:
+
+- [Bumper](https://flatland-simulator.readthedocs.io/en/latest/included_plugins/bumper.html). Detects collisions and publishes them to a topic using [flatland_msgs.msg.Collisions](https://flatland-simulator.readthedocs.io/en/latest/included_plugins/bumper.html).
+
+- [Diff Drive](https://flatland-simulator.readthedocs.io/en/latest/included_plugins/diff_drive.html). Subscribes to a topic that receives [geometry_msgs.msg.Twist](http://docs.ros.org/en/api/geometry_msgs/html/msg/Twist.html) that modify the models velocity.
+
+- [Laser](https://flatland-simulator.readthedocs.io/en/latest/included_plugins/laser.html). Simulates a LiDAR sensor and publishes the readings to a topic using [sensor_msgs.msg.LaserScan](http://docs.ros.org/en/api/sensor_msgs/html/msg/LaserScan.html).
+
+For more information on how to configure this file go to the [configuring models page](https://flatland-simulator.readthedocs.io/en/latest/core_functions/models.html) of the documentation.
 
 # Keyboard control
+
+Now it's time to control the robot using the keyboard. Athough it is possible to read keystrokes and control the robot all inside the same node, ROS works better if we keep things modular. What we'll try to have another node running in parallel reading keyboard inputs and publishing them to a topic.
+
+You can already find a ready to use package to do that in [this repository](https://github.com/FilipeAlmeidaFEUP/ros2_teleopkeys_publisher). You can follow the instructions there to get it running. It's a very simple package so you can inspect it latter and figure out how it works but, for now, all you need to know is that it reads keystrokes from certain keys and it publishes them to the topic '/teleopkeys' as messages of the type [String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html). Here's the [list of available keys and the messages they produce](https://github.com/FilipeAlmeidaFEUP/ros2_teleopkeys_publisher#available-keys).
+
+Once you have the keyboard reading node running, you need to go to the [\_\_init\_\_.py](serp_teleop/__init__.py) file and change this variable to `True`:
+```
+# if you didn't change anything, this is on line 21
+self.use_keyboard = False
+```
+ 
+This will change the flow of the code so that it now will read from the topic '/teleopkeys' and control the robot accordingly. Now all you need to do is to open a new terminal and run the Flatland world again. But before don't forget that you might need to run some of the commands from [this section](#building-and-installing-dependencies) again.
+
+If everything is working, you should be able to control the robot using the arrow or the WASD keys. All the plugins are still being used. If you get to close to a wall, a warning message appears on the terminal and the robot moves slower. If you collide with a wall you go back to the original position.

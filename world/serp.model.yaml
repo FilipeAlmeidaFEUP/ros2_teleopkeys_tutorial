@@ -63,11 +63,12 @@ plugins:
     odom_frame_id: odom
     odom_pub: odom  # topic odom is published on
   
+  # needed for some visualization components
   - type: ModelTfPublisher
     name: tf_publisher
     publish_tf_world: false
 
-  #lidar for DRL
+  # simulates a lidar by having 90 lasers evenly spread around the model
   - type: Laser
     name: static_laser
     frame: static_laser_link
@@ -76,7 +77,6 @@ plugins:
     broadcast_tf: true
     origin: [0.0, 0.0, 0.0]
     range: 10
-    # angle: {min: -3.14159265359, max: 3.14159265359, increment: 0.05235987755}
     angle: {min: -3.14159265359, max: 3.14159265359, increment: 0.06981317007}
     noise_std_dev: 0.015
     update_rate: 10

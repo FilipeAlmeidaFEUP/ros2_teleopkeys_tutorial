@@ -7,7 +7,6 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    #pkg_share = get_package_share_directory("turtlebot_flatland")
     pkg_share = FindPackageShare("serp_teleop")
 
     world_path = LaunchConfiguration("world_path")
@@ -19,9 +18,9 @@ def generate_launch_description():
 
     ld = LaunchDescription(
         [
-            # ******************** flatland********************
-            # You can override these default values:
-            #   roslaunch flatland_Server server.launch world_path:="/some/world.yaml" initial_rate:="30.0"
+            # Flatland parameters.
+            # You can either change these values directly here or override them in the launch command default values. Example:
+            #   ros2 launch serp_teleop serp_teleop.launch.py update_rate:="20.0"
             DeclareLaunchArgument(
                 name="world_path",
                 default_value=PathJoinSubstitution([pkg_share, "world/world.yaml"]),
@@ -34,6 +33,7 @@ def generate_launch_description():
 
             SetEnvironmentVariable(name="ROSCONSOLE_FORMAT", value="[${severity} ${time} ${logger}]: ${message}"),
 
+            # **** Nodes launched by this file ****
             # launch flatland server
             Node(
                 name="flatland_server",
@@ -41,7 +41,7 @@ def generate_launch_description():
                 executable="flatland_server",
                 output="screen",
                 parameters=[
-                    # Use the arguments passed into the launchfile for this node
+                    # use the arguments passed into the launchfile for this node
                     {"world_path": world_path},
                     {"update_rate": update_rate},
                     {"step_size": step_size},
@@ -50,7 +50,7 @@ def generate_launch_description():
                     {"use_sim_time": use_sim_time},
                 ],
             ),
-
+            # runs the code in the file serp_teleop/__init__.py that is used to control the robot
             Node(
                 name="serp_teleop",
                 package="serp_teleop",
@@ -58,7 +58,7 @@ def generate_launch_description():
                 output="screen",
             ),
 
-            # ****** Maps *****
+            # maps
             Node(
                 name="tf",
                 package="tf2_ros",
@@ -66,7 +66,7 @@ def generate_launch_description():
                 arguments=["0", "0", "0", "0", "0", "0", "map", "odom"],
             ),
 
-            # **************** Visualisation ****************
+            # visualisation 
             Node(
                 name="rviz",
                 package="rviz2",
