@@ -147,7 +147,7 @@ ros2 topic echo topic_name
 
 ### Other setup files
 
-Although most setup files don't require a lot of attention and are very simple, there are some canfigurations that you need to check in your packages.
+Although most setup files don't require a lot of attention and are very simple, there are some configurations that you need to check in your packages.
 
 One of them is to chech that you have all the dependencies in the [package.xml](package.xml) file. 
 
