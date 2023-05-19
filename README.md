@@ -93,11 +93,13 @@ class NewNode(Node):
 
 Both methods are equally valid but the second one might be better to keep the code organized in more complex projects. For any other code examples in this tutorial, consider the variable `node` as an initialized instance of the `rclpy.node.Node` class.
 
+NOTE: In the following code examples, <Msg_Type> is only a placeholder for these examples and each topic has a different format to its messages. For each case look for the proper documentation to help you.
+
 The `flatland_server` node publishes to several topics the `serp_teleop` node needs to subscribe to. To do so, the following code is necessary for each subscription:
 
 ```
 #create a subscription
-node.create_subscription(Msg_Type, "/topic_name", handling_function, queue_size)
+node.create_subscription(<Msg_Type>, "/topic_name", handling_function, queue_size)
 
 #each time a message is published, this function is executed and the arg data is the message as a Msg_Type instance
 def handling_function(data):
@@ -108,23 +110,21 @@ The `flatland_server` also subscribes to some topics the `serp_teleop` node will
 
 ```
 #create a publisher
-node.pub:Publisher = self.create_publisher(Msg_Type, "/topic_name", queue_size)
+node.pub:Publisher = self.create_publisher(<Msg_Type>, "/topic_name", queue_size)
 
 #call this function to send a message to the topic
-msg = Msg_Type()
+msg = <Msg_Type>()
 publisher.publish(msg)
 ```
 
 The `serp_teleop` node also needs to use [Flatland services](https://flatland-simulator.readthedocs.io/en/latest/core_functions/ros_services.html#). This code sends a request to a service:
 
 ```
-client = node.create_client(Msg_Type, "/service_name")
+client = node.create_client(<Msg_Type>, "/service_name")
 client.wait_for_service()
-request = Msg_Type()
+request = <Msg_Type>()
 client.call_async(request)
 ```
-
-NOTE: Msg_Type is only a placeholder for these examples and each topic has a different format to their messages. For each case look for the proper documentation to help you.
 
 ROS 2 provides several commands to help you see details about every communication between nodes inside the ROS 2 platform. With the package running, you can experiment with the following commands:
 
@@ -144,6 +144,40 @@ ros2 node info node_name
 ```
 ros2 topic echo topic_name
 ```
+
+### RViz file
+
+The window that contains the Flatland worl is configured by the RViz plugin, [a visualization tool for ROS](https://github.com/ros2/rviz) in the [robot_navigation.rviz](rviz/robot_navigation.rviz) file. To keep things simple, you can keep this file mostly unchanged, except when you need to add a new model or a new layer to your world (more about Flatland models and layers in the [next section](#flatland)). Inside the list `Visualization Manager/Displays` you need the entries:
+
+``` 
+# for each model in the world
+- Class: rviz_default_plugins/MarkerArray
+  Enabled: true
+  Topic:
+    Value: /models/m_<model_name>
+  Name: Turtlebot
+  Namespaces:
+    "": true
+  Queue Size: 100
+  Value: true
+  
+# for each layer in the world
+- Class: rviz_default_plugins/MarkerArray
+  Enabled: true
+  Topic:
+    Value: /layers/l_<layer_name>
+    Depth: 1
+    History Policy: Keep Last
+    Reliability Policy: Reliable
+    Durability Policy: Transient Local
+  Name: World
+  Namespaces:
+    "": true
+  Queue Size: 100
+  Value: true
+```
+
+Athough there is no influence in the physics component of simulation, if a model/layer is not added to this list, it won't appear in the visualization. Some other possible changes to this file are signaled in the file through comments.
 
 ### Other setup files
 
