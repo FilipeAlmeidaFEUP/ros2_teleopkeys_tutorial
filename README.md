@@ -242,3 +242,7 @@ self.use_keyboard = False
 This will change the flow of the code so that it now will read from the topic '/teleopkeys' and control the robot accordingly. Now all you need to do is to open a new terminal and run the Flatland world again. However, before that, do not forget that you might need to run some of the commands from [this section](#building-and-installing-dependencies) again.
 
 If everything is working, you should be able to control the robot using the arrow or the WASD keys. All the plugins are still being used. If you get too close to a wall, a warning message appears on the terminal and the robot moves slower. If you collide with a wall you go back to the original position.
+
+# Next setps
+
+Now that you are finished with this tutorial, move on to the [next one](https://github.com/FilipeAlmeidaFEUP/ros2_flatland_rl_tutorial) where you will use a similar setup teach the robot a simple task using Reinforcement Learning.
