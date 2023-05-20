@@ -367,6 +367,7 @@ Visualization Manager:
         {}
       Queue Size: 100
       Value: false
+    # add all layers here
     - Class: rviz_default_plugins/MarkerArray
       Enabled: true
       Topic:
@@ -393,28 +394,7 @@ Visualization Manager:
         "": true
       Queue Size: 100
       Value: true
-    - Class: rviz_default_plugins/MarkerArray
-      Enabled: true
-      Topic:
-        Value: /layers/l_map
-        Depth: 1
-        History Policy: Keep Last
-        Reliability Policy: Reliable
-        Durability Policy: Transient Local
-      Name: World
-      Namespaces:
-        "": true
-      Queue Size: 100
-      Value: true
-    - Class: rviz_default_plugins/MarkerArray
-      Enabled: true
-      Topic:
-        Value: /models/m_CTurtle
-      Name: Turtlebot
-      Namespaces:
-        "": true
-      Queue Size: 100
-      Value: true
+    # add all models here
     - Class: rviz_default_plugins/MarkerArray
       Enabled: true
       Topic:
@@ -494,9 +474,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
+      # initial camera zoom
       Scale: 120.0
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
+      # initial camera position
       X: 3.3
       Y: -1.7
     Saved: ~
