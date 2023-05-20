@@ -209,6 +209,8 @@ Another possible configuration for this file is to manually define line segments
 
 For more information on how to configure this file go to the [configuring layers page](https://flatland-simulator.readthedocs.io/en/latest/core_functions/layers.html) of the documentation.
 
+Managing layers can quickly become a very complex task, even for relatively simple projects. If you need extra help managing this task in future projects, [this slideshow](layers_ppt/Managing_Layers_in_Flatland.pdf) demonstrates a method that uses graphs to determine the minimum number of layers and which components need to interact with them.
+
 ### Model file
 
 Each model needs their own configuration file. In this package you can look at the example from the SERP robot simulation model in the file [serp.model.yaml](world/serp.model.yaml).
