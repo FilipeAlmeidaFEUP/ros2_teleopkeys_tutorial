@@ -2,22 +2,22 @@
 
 This tutorial will show you how it is possible to use ROS 2 and the Flatland Simulator to create a simulated world with a robot and how to control it using the keyboard. It also briefly explains how these tools function but, if you wish to learn more about them, please visit the [ROS 2 Documentation](https://docs.ros.org/en/humble/) and the [Flatland Documentation](https://flatland-simulator.readthedocs.io/en/latest/). All the code in this tutorial is written in python.
 
-# Setup and Pre-requisites
+## Setup and Pre-requisites
 
-## ROS 2 Humble Installation
+### ROS 2 Humble Installation
 
 This tutorial was built to work with ROS 2 Humble which is, at the time of writing, the latest distribution. Follow the instructions in the official [ROS 2 installation guide](https://docs.ros.org/en/humble/Installation.html). 
 It is recommended to at least install the desktop version, as some tools that will be used here are already contained within.
 
-## Flatland 2
+### Flatland 2
 
 A fork of Flatland modified to work on ROS 2 natively is available on [this repository](https://github.com/JoaoCostaIFG/flatland). Follow the installation instructions to have this version available on your machine.
 
-## Workspace setup
+### Workspace setup
 
 To be able to build all the dependencies and run your projects, ROS needs a designated folder known as the workspace. To setup your workspace follow the oficial [ROS 2 tutorial on how to create a workspace](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html).
 
-# Clone the repository
+## Clone the repository
 
 After everything is setup, run the following commands inside your ROS 2 workspace folder to clone this repository as a package:
 
@@ -26,7 +26,7 @@ cd src/
 git clone https://github.com/FilipeAlmeidaFEUP/ros2_teleopkeys_tutorial.git
 ```
 
-# Building and installing dependencies
+## Building and installing dependencies
 
 Before running the package for the first time, you need to execute all these commands:
 
@@ -41,7 +41,7 @@ After the first run, these commands might be useful for this or any other packag
 - If there are new dependencies on any of your packages (ex.:new python imports), you should run command 1 to make sure all of them are resolved.
 - If you are creating a new package or cloning one, run all the commands.
 
-# Running the package
+## Running the package
 
 Once everything is built, running the package can be done with the command:
 ```
@@ -62,13 +62,13 @@ The window on the left called Displays allows you to control some aspects of the
 
 For now, the robot can not be controlled with the keyboard. It moves forward until it detects a wall in front of it using its radar. When a wall is detected, it randomly chooses one direction to rotate 90º, essentially following a random path. The next section will briefly explain how a Flatland ROS 2 package is structured. If you wish to skip this part and go directly to the keyboard control, go to [this section](#keyboard-control).
 
-# The Flatland ROS 2 package
+## The Flatland ROS 2 package
 
-## ROS 2
+### ROS 2
 
 To help you understand the structure of ROS, take a quick look in the documentation sections [Nodes](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Nodes/Understanding-ROS2-Nodes.html), [Topics](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html) and [Services](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Services/Understanding-ROS2-Services.html). You don't need to perform any of the tasks, just read the first few sections in each and watch the animations that are provided.
 
-### Launch file
+#### Launch file
 
 ROS 2 provides the `run` run command that starts one node but, in some cases, like in this package, you might want to start several nodes at once. To do that you can use a launch file such as the [serp_teleop.launch.py](launch/serp_teleop.launch.py) in this repository. For more information on this type of file, consult the documentation on [creating launch files](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html). A total of 4 nodes are launched by this file but, for now, lets focus on only 2:
 
@@ -76,7 +76,7 @@ ROS 2 provides the `run` run command that starts one node but, in some cases, li
 
 - The `serp_teleop` node: runs the code in the file [\_\_init\_\_.py](serp_teleop/__init__.py) that is used to control the robot. This node needs to have an instance of the class `rclpy.node.Node` created and initialized. This can be done by:
 
-### Using Topics and Services
+#### Using Topics and Services
 
 Before you can use topics and services, you need an initialized instance of the `rclpy.node.Node` class. This can be achieved in several ways, such as:
 
@@ -145,7 +145,7 @@ ros2 node info node_name
 ros2 topic echo topic_name
 ```
 
-### RViz file
+#### RViz file
 
 The window that contains the Flatland worl is configured by the RViz plugin, [a visualization tool for ROS](https://github.com/ros2/rviz) in the [robot_navigation.rviz](rviz/robot_navigation.rviz) file. To keep things simple, you can keep this file mostly unchanged, except when you need to add a new model or a new layer to your world (more about Flatland models and layers in the [next section](#flatland)). Inside the list `Visualization Manager/Displays` you need the entries:
 
@@ -179,7 +179,7 @@ The window that contains the Flatland worl is configured by the RViz plugin, [a 
 
 Athough there is no influence in the physics component of simulation, if a model/layer is not added to this list, it won't appear in the visualization. Some other possible changes to this file are signaled in the file through comments.
 
-### Other setup files
+#### Other setup files
 
 Although most setup files don't require a lot of attention and are very simple, there are some configurations that you need to check in your packages.
 
@@ -187,11 +187,11 @@ One of them is to check that you have all the dependencies in the [package.xml](
 
 You also may need to pay some attention to the [setup.py](setup.py) file. To help you build this file in future packages look at the example with comments on this project or for a more detailed explanation go to the [guide on how to develop a ROS 2 python package](https://docs.ros.org/en/humble/How-To-Guides/Developing-a-ROS-2-Package.html#python-packages).
 
-## Flatland
+### Flatland
 
 Flatland configures its worlds through the use of YAML files. These files follow a simple structure that should be simple to understand just by looking at the examples provided in this repository. If you need any extra help, take a look at the [YAML Syntax](https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html).
 
-### World file
+#### World file
 
 The [world.yaml](world/world.yaml) file is where the Flatland world is configured and is sourced directly by the launch file. 
 
@@ -201,7 +201,7 @@ There is also a list of models that are included in the world. Each one needs a 
 
 For more information on how to configure this file go to the [configuring world page](https://flatland-simulator.readthedocs.io/en/latest/core_functions/world.html) of the documentation.
 
-### Layer file
+#### Layer file
 
 In this package there is only one layer, configured in the file [maze.yaml](world/maze.yaml). This configuration works by taking an image ([maze.png](world/maze.png)) and using a threshold to turn it into a binary image. It then builds a map by placing walls where the image transitions from 0 to 1 or 1 to 0.
 
@@ -211,7 +211,7 @@ For more information on how to configure this file go to the [configuring layers
 
 Managing layers can quickly become a very complex task, even for relatively simple projects. If you need extra help managing this task in future projects, [this slideshow](layers_ppt/Managing_Layers_in_Flatland.pdf) demonstrates a method that uses graphs to determine the minimum number of layers and which components need to interact with them.
 
-### Model file
+#### Model file
 
 Each model needs their own configuration file. In this package you can look at the example from the SERP robot simulation model in the file [serp.model.yaml](world/serp.model.yaml).
 
@@ -227,7 +227,7 @@ For the model to interact with the world, it needs to configure a list of plugin
 
 For more information on how to configure this file go to the [configuring models page](https://flatland-simulator.readthedocs.io/en/latest/core_functions/models.html) of the documentation.
 
-# Keyboard control
+## Keyboard control
 
 Now it's time to control the robot using the keyboard. Although it is possible to read keystrokes and control the robot all inside the same node, ROS works better if we keep things modular. We'll try to have another node running in parallel reading keyboard inputs and publishing them to a topic.
 
@@ -243,6 +243,6 @@ This will change the flow of the code so that it now will read from the topic '/
 
 If everything is working, you should be able to control the robot using the arrow or the WASD keys. All the plugins are still being used. If you get too close to a wall, a warning message appears on the terminal and the robot moves slower. If you collide with a wall you go back to the original position.
 
-# Next setps
+## Next setps
 
 Now that you are finished with this tutorial, move on to the [next one](https://github.com/FilipeAlmeidaFEUP/ros2_flatland_rl_tutorial) where you will use a similar setup teach the robot a simple task using Reinforcement Learning.
