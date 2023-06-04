@@ -4,18 +4,24 @@ This tutorial will show you how it is possible to use ROS 2 and the Flatland Sim
 
 ## Setup and Pre-requisites
 
+### Using a VM
+
+To allow for a faster and simpler start, there is a Virtual Machine for [VirtualBox](https://www.virtualbox.org/) with every requirement already installed and ready to build the packages and run the code. To get it running, you can download [this file](https://drive.google.com/file/d/1Wte7yGi9puJU5gR8mpzAtvtKOPtoYKEJ/view?usp=sharing) and import it in the VirtualBox Manager window. Next sections will explain how to get this setup on you own machine but if you only want to use the VM for now you can skip to [this section](#building-and-installing-dependencies).
+
 ### ROS 2 Humble Installation
 
 This tutorial was built to work with ROS 2 Humble which is, at the time of writing, the latest distribution. Follow the instructions in the official [ROS 2 installation guide](https://docs.ros.org/en/humble/Installation.html). 
 It is recommended to at least install the desktop version, as some tools that will be used here are already contained within.
 
-### Flatland 2
-
-A fork of Flatland modified to work on ROS 2 natively is available on [this repository](https://github.com/JoaoCostaIFG/flatland). Follow the installation instructions to have this version available on your machine.
-
 ### Workspace setup
 
 To be able to build all the dependencies and run your projects, ROS needs a designated folder known as the workspace. To setup your workspace follow the oficial [ROS 2 tutorial on how to create a workspace](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html).
+
+You will probably need to install some colcon packages to build the workspace. Follow the propper instructions for you own machime in the [documentation](https://colcon.readthedocs.io/en/released/user/installation.html).
+
+### Flatland 2
+
+A fork of Flatland modified to work on ROS 2 natively is available on [this repository](https://github.com/JoaoCostaIFG/flatland). Follow the installation instructions to have this version available on your machine.
 
 ## Clone the repository
 
@@ -72,9 +78,11 @@ To help you understand the structure of ROS, take a quick look in the documentat
 
 ROS 2 provides the `run` run command that starts one node but, in some cases, like in this package, you might want to start several nodes at once. To do that you can use a launch file such as the [serp_teleop.launch.py](launch/serp_teleop.launch.py) in this repository. For more information on this type of file, consult the documentation on [creating launch files](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html). A total of 4 nodes are launched by this file but, for now, lets focus on only 2:
 
-- The `flatland_server` node: runs the Flatland simulation, including the robot and the world. This node has several arguments that modify the functioning of the simulator. For a more detailed explanation on these parameters go to Flatland documentation on [how to launch Flatland server node](https://flatland-simulator.readthedocs.io/en/latest/core_functions/ros_launch.html#).
+- The `flatland_server` node: runs the Flatland simulation, including the robot and the world. This node has several arguments that modify the functioning of the simulator. For a more detailed explanation on these parameters go to Flatland documentation on [how to launch Flatland server node](https://flatland-simulator.readthedocs.io/en/latest/core_functions/ros_launch.html#). From these parameters, the `update_rate` them allows you to change the speed of the simulation with 100 being regular speed.
 
 - The `serp_teleop` node: runs the code in the file [\_\_init\_\_.py](serp_teleop/__init__.py) that is used to control the robot. This node needs to have an instance of the class `rclpy.node.Node` created and initialized. This can be done by:
+
+NOTE: From the Flatland parameters, the `update_rate` them allows you to change the speed of the simulation with 100 being regular speed. Keep this parameter in mind, since it will be important in the following tutorial.
 
 #### Using Topics and Services
 
@@ -213,7 +221,7 @@ Managing layers can quickly become a very complex task, even for relatively simp
 
 #### Model file
 
-Each model needs their own configuration file. In this package you can look at the example from the SERP robot simulation model in the file [serp.model.yaml](world/serp.model.yaml).
+Each model needs their own configuration file. In this package you can look at the example from the SERP robot (a simple differential drive robot) simulation model in the file [serp.model.yaml](world/serp.model.yaml).
 
 This file starts by defining a list of bodies with predefined shapes or customizable polygons that create the shape of the model. It can also have a list of joints to connect the bodies.
 
@@ -232,6 +240,8 @@ For more information on how to configure this file go to the [configuring models
 Now it's time to control the robot using the keyboard. Although it is possible to read keystrokes and control the robot all inside the same node, ROS works better if we keep things modular. We'll try to have another node running in parallel reading keyboard inputs and publishing them to a topic.
 
 You can already find a ready to use package to do that in [this repository](https://github.com/FilipeAlmeidaFEUP/ros2_teleopkeys_publisher). You can follow the instructions there to get it running. It's a very simple package so you can inspect it later and figure out how it works but, for now, all you need to know is that it reads keystrokes from certain keys and it publishes them to the topic '/teleopkeys' as messages of the type [String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html). Here's the [list of available keys and the messages they produce](https://github.com/FilipeAlmeidaFEUP/ros2_teleopkeys_publisher#available-keys).
+
+NOTE: If you are using the VM, this package is already installed. 
 
 Once you have the keyboard reading node running, you need to go to the [\_\_init\_\_.py](serp_teleop/__init__.py) file and change this variable to `True`:
 ```
