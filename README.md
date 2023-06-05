@@ -8,6 +8,9 @@ This tutorial will show you how it is possible to use ROS 2 and the Flatland Sim
 
 To allow for a faster and simpler start, there is a Virtual Machine for [VirtualBox](https://www.virtualbox.org/) with every requirement already installed and ready to build the packages and run the code. To get it running, you can download [this file](https://drive.google.com/file/d/1Wte7yGi9puJU5gR8mpzAtvtKOPtoYKEJ/view?usp=sharing) and import it in the VirtualBox Manager window. Next sections will explain how to get this setup on you own machine but if you only want to use the VM for now you can skip to [this section](#building-and-installing-dependencies).
 
+VM user: ros2
+VM password: ros2
+
 ### ROS 2 Humble Installation
 
 This tutorial was built to work with ROS 2 Humble which is, at the time of writing, the latest distribution. Follow the instructions in the official [ROS 2 installation guide](https://docs.ros.org/en/humble/Installation.html). 
