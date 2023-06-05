@@ -78,11 +78,11 @@ To help you understand the structure of ROS, take a quick look in the documentat
 
 ROS 2 provides the `run` run command that starts one node but, in some cases, like in this package, you might want to start several nodes at once. To do that you can use a launch file such as the [serp_teleop.launch.py](launch/serp_teleop.launch.py) in this repository. For more information on this type of file, consult the documentation on [creating launch files](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html). A total of 4 nodes are launched by this file but, for now, lets focus on only 2:
 
-- The `flatland_server` node: runs the Flatland simulation, including the robot and the world. This node has several arguments that modify the functioning of the simulator. For a more detailed explanation on these parameters go to Flatland documentation on [how to launch Flatland server node](https://flatland-simulator.readthedocs.io/en/latest/core_functions/ros_launch.html#). From these parameters, the `update_rate` them allows you to change the speed of the simulation with 100 being regular speed.
+- The `flatland_server` node: runs the Flatland simulation, including the robot and the world. This node has several arguments that modify the functioning of the simulator. For a more detailed explanation on these parameters go to Flatland documentation on [how to launch Flatland server node](https://flatland-simulator.readthedocs.io/en/latest/core_functions/ros_launch.html#).
 
 - The `serp_teleop` node: runs the code in the file [\_\_init\_\_.py](serp_teleop/__init__.py) that is used to control the robot. This node needs to have an instance of the class `rclpy.node.Node` created and initialized. This can be done by:
 
-NOTE: From the Flatland parameters, the `update_rate` them allows you to change the speed of the simulation with 100 being regular speed. Keep this parameter in mind, since it will be important in the following tutorial.
+NOTE: From the Flatland parameters, the `update_rate` allows you to change the speed of the simulation with 100 being regular speed. Keep this parameter in mind, since it will be important in the following tutorial.
 
 #### Using Topics and Services
 
