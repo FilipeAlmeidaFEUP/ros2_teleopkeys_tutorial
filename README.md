@@ -217,7 +217,7 @@ Another possible configuration for this file is to manually define line segments
 
 For more information on how to configure this file go to the [configuring layers page](https://flatland-simulator.readthedocs.io/en/latest/core_functions/layers.html) of the documentation.
 
-Managing layers can quickly become a very complex task, even for relatively simple projects. If you need extra help managing this task in future projects, [this slideshow](layers_ppt/Managing_Layers_in_Flatland.pdf) demonstrates a method that uses graphs to determine the minimum number of layers and which components need to interact with them. The second to last slide shows the layer graph for this project.
+Managing layers can quickly become a very complex task, even for relatively simple projects. If you need extra help managing this task in future projects, [this Google Slides presentation](https://docs.google.com/presentation/d/1KqJDQR_PBaGtS-kA5KgsTbaRThu_uP2U8NJeoSP0GDE/edit?usp=sharing) ([pdf also available in this repository](layers_ppt/Managing_Layers_in_Flatland.pdf)) demonstrates a method that uses graphs to determine the minimum number of layers and which components need to interact with them. The second to last slide shows the layer graph for this project.
 
 #### Model file
 
