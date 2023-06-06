@@ -6,7 +6,7 @@ This tutorial will show you how it is possible to use ROS 2 and the Flatland Sim
 
 ### Using a VM
 
-To allow for a faster and simpler start, there is a Virtual Machine for [VirtualBox](https://www.virtualbox.org/) with every requirement already installed and ready to build the packages and run the code. To get it running, you can download [this file](https://drive.google.com/file/d/16iEw52soCf47NKXHdUny6m09pMhaWu2Q/view?usp=sharing) and import it in the VirtualBox Manager window. Next sections will explain how to get this setup on you own machine but if you only want to use the VM for now you can skip to [this section](#building-and-installing-dependencies).
+To allow for a faster and simpler start, there is a Virtual Machine for [VirtualBox](https://www.virtualbox.org/) with every requirement already installed and ready to build the packages and run the code. To get it running, you can download [this file](https://drive.google.com/file/d/1CfS64HmVqUgRVWj7t0K2_QW78_ddtoAM/view?usp=sharing) and import it in the VirtualBox Manager window. Next sections will explain how to get this setup on you own machine but if you only want to use the VM for now you can skip to [this section](#building-and-installing-dependencies).
 
 VM user: ros2
 
