@@ -6,7 +6,7 @@ This tutorial will show you how it is possible to use ROS 2 and the Flatland Sim
 
 ### Using a VM
 
-To allow for a faster and simpler start, there is a Virtual Machine for [VirtualBox](https://www.virtualbox.org/) with every requirement already installed and ready to build the packages and run the code. To get it running, you can download [this file](https://drive.google.com/file/d/1Wte7yGi9puJU5gR8mpzAtvtKOPtoYKEJ/view?usp=sharing) and import it in the VirtualBox Manager window. Next sections will explain how to get this setup on you own machine but if you only want to use the VM for now you can skip to [this section](#building-and-installing-dependencies).
+To allow for a faster and simpler start, there is a Virtual Machine for [VirtualBox](https://www.virtualbox.org/) with every requirement already installed and ready to build the packages and run the code. To get it running, you can download [this file](https://drive.google.com/file/d/16iEw52soCf47NKXHdUny6m09pMhaWu2Q/view?usp=sharing) and import it in the VirtualBox Manager window. Next sections will explain how to get this setup on you own machine but if you only want to use the VM for now you can skip to [this section](#building-and-installing-dependencies).
 
 VM user: ros2
 VM password: ros2
@@ -21,6 +21,12 @@ It is recommended to at least install the desktop version, as some tools that wi
 To be able to build all the dependencies and run your projects, ROS needs a designated folder known as the workspace. To setup your workspace follow the oficial [ROS 2 tutorial on how to create a workspace](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Creating-A-Workspace/Creating-A-Workspace.html).
 
 You will probably need to install some colcon packages to build the workspace. Follow the propper instructions for you own machime in the [documentation](https://colcon.readthedocs.io/en/released/user/installation.html).
+
+To make sure you don't need to source the setup.bash script in every new terminal, run these two commands:
+```
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
 
 ### Flatland 2
 
