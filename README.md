@@ -263,6 +263,11 @@ This will change the flow of the code so that it now will read from the topic '/
 
 If everything is working, you should be able to control the robot using the arrow or the WASD keys. All the plugins are still being used. If you get too close to a wall, a warning message appears on the terminal and the robot moves slower. If you collide with a wall you go back to the original position.
 
+## Make your own robot controller
+Now that you understand how to use ROS2 and Flatland, you can try to modify the code to develop your own controller for the robot. Since this project is setup to control the robot with the keyboard, the code can be a little confusing to make changes to. 
+
+To make it easier for you to get started writing a controller, use [this package](https://github.com/FilipeAlmeidaFEUP/ros2_flatland_robot_controller) instead, which is an empty template for a controller with comments in the code to help you. To get it setup and running, just follow the [instructions in the repository](https://github.com/FilipeAlmeidaFEUP/ros2_flatland_robot_controller#setup-the-package).
+
 ## Next setps
 
 Now that you are finished with this tutorial, move on to the [next one](https://github.com/FilipeAlmeidaFEUP/ros2_flatland_rl_tutorial) where you will use a similar setup teach the robot a simple task using Reinforcement Learning.
