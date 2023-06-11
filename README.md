@@ -12,6 +12,8 @@ VM user: ros2
 
 VM password: ros2
 
+NOTE: To make sure the you have the most current version of all the tutorials on the machine, you should do ```git pull``` in the folders of all cloned repositories.  
+
 ### ROS 2 Humble Installation
 
 This tutorial was built to work with ROS 2 Humble which is, at the time of writing, the latest distribution. Follow the instructions in the official [ROS 2 installation guide](https://docs.ros.org/en/humble/Installation.html). 

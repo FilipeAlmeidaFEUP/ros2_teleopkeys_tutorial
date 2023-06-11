@@ -56,7 +56,7 @@ class SerpController(Node):
         # ******************************
 
     # Change the speed of the robot
-    def change_speed(self, publisher, linear, angular):
+    def change_robot_speeds(self, publisher, linear, angular):
         twist_msg = Twist()
         twist_msg.linear.x = linear
         twist_msg.angular.z = angular
@@ -97,10 +97,10 @@ class SerpController(Node):
                 # total rotation = 1.570796327 rad/s * (0.1s * 10) = 1.570796327 rad = 90º
                 self.rotation_iterations_left = 10
             else:
-                self.change_speed(self.pub, self.linear_speed, 0.0)
+                self.change_robot_speeds(self.pub, self.linear_speed, 0.0)
                 return
         self.rotation_iterations_left -= 1
-        self.change_speed(self.pub, 0.0, self.angular_speed)
+        self.change_robot_speeds(self.pub, 0.0, self.angular_speed)
 
     def check_closest_obstacle(self,data):
         # Find the closest reading
@@ -130,7 +130,7 @@ class SerpController(Node):
         if len(data.collisions) > 0:
             self.rotation_iterations_left = 0
             
-            self.change_speed(self.pub, 0.0, 0.0)
+            self.change_robot_speeds(self.pub, 0.0, 0.0)
 
             # Move robot to initial position
             self.move_model("serp", 0.0, 0.0, -1.57079632679)
@@ -161,7 +161,7 @@ class SerpController(Node):
 
         if self.slow_down: linear_speed /= 2
 
-        self.change_speed(self.pub, linear_speed, angular_speed)
+        self.change_robot_speeds(self.pub, linear_speed, angular_speed)
 
 def main(args = None):
     rclpy.init()
