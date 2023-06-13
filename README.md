@@ -70,6 +70,8 @@ If everything worked as intended, you should be seeing a window that looks like 
 
 ![Flatland Window](images/flatland_window.png)
 
+![Flatland Window](images/flatland_window.gif)
+
 Right now you are seeing the robot move inside the map built for this package but, although the space is not being used, the world extends beyond the walls on the screen. To navigate through the flatland world use these mouse controls:
 
 - Scroll button + drag: move the window.
