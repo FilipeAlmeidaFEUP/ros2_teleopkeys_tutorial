@@ -272,6 +272,6 @@ Now that you understand how to use ROS2 and Flatland, you can try to modify the 
 
 To make it easier for you to get started writing a controller, use [this package](https://github.com/FilipeAlmeidaFEUP/ros2_flatland_robot_controller) instead, which is an empty template for a controller with comments in the code to help you. To get it setup and running, just follow the [instructions in the repository](https://github.com/FilipeAlmeidaFEUP/ros2_flatland_robot_controller#setup-the-package).
 
-## Next setps
+## Next steps
 
 Now that you are finished with this tutorial, move on to the [next one](https://github.com/FilipeAlmeidaFEUP/ros2_flatland_rl_tutorial) where you will use a similar setup teach the robot a simple task using Reinforcement Learning.
