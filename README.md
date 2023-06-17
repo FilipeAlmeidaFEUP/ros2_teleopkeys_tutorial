@@ -259,7 +259,7 @@ NOTE: If you are using the VM, this package is already installed.
 
 Once you have the keyboard reading node running, you need to go to the [\_\_init\_\_.py](serp_teleop/__init__.py) file and change this variable to `True`:
 ```
-# if you didn't change anything, this is on line 21
+# if you didn't change anything, this is on line 20
 self.use_keyboard = False
 ```
  
