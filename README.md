@@ -46,7 +46,7 @@ git clone https://github.com/FilipeAlmeidaFEUP/ros2_teleopkeys_tutorial.git
 
 ## Building and installing dependencies
 
-Before running the package for the first time, you need to execute all these commands in the workspace folder (named "ros2_ws" on the VM):
+Before running the package for the first time, you need to execute all these commands in the workspace folder (named "ros2_ws" in the VM):
 
 1. Resolve dependencies:`rosdep install -i --from-path src --rosdistro humble -y`
 2. Build the workspace:`colcon build`
@@ -54,7 +54,7 @@ Before running the package for the first time, you need to execute all these com
 
 After the first run, these commands might be useful for this or any other package in your workspace:
 
-- For every new terminal that you open that accesses the workspace, run command 3. As an alternative, you can add the command to .bashrc so that it is automatically executed everytime a new terminal is opened. For users running the tutorial through the VM, the commands are:
+- For every new terminal that you open that accesses the workspace, run command 3. As an alternative, you can add the command to .bashrc so that it is automatically executed everytime a new terminal is opened. For users running the tutorial in the VM, the commands are:
 ```
 echo "source /ros2_ws/install/setup.bash" >> ~/.bashrc
 source ~/.bashrc
