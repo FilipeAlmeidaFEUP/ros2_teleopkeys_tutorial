@@ -56,7 +56,7 @@ After the first run, these commands might be useful for this or any other packag
 
 - For every new terminal that you open that accesses the workspace, run command 3. As an alternative, you can add the command to .bashrc so that it is automatically executed everytime a new terminal is opened. For users running the tutorial in the VM, the commands are:
 ```
-echo "source /ros2_ws/install/setup.bash" >> ~/.bashrc
+echo "source /home/ros2/ros2_ws/install/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
 - If you made changes in any file of any package, you need to either build the entire workspace with command 2 or use the same command with [arguments](https://colcon.readthedocs.io/en/released/reference/package-selection-arguments.html) to build only specific packages.
