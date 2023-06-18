@@ -54,7 +54,11 @@ Before running the package for the first time, you need to execute all these com
 
 After the first run, these commands might be useful for this or any other package in your workspace:
 
-- For every new terminal that you open that accesses the workspace, run command 3.
+- For every new terminal that you open that accesses the workspace, run command 3. As an alternative, you can add the command to .bashrc so that it is automatically executed everytime a new terminal is opened. For users running the tutorial through the VM, the commands are:
+```
+echo "source /ros2_ws/install/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
 - If you made changes in any file of any package, you need to either build the entire workspace with command 2 or use the same command with [arguments](https://colcon.readthedocs.io/en/released/reference/package-selection-arguments.html) to build only specific packages.
 - If there are new dependencies on any of your packages (ex.:new python imports), you should run command 1 to make sure all of them are resolved.
 - If you are creating a new package or cloning one, run all the commands.
@@ -263,7 +267,10 @@ Once you have the keyboard reading node running, you need to go to the [\_\_init
 self.use_keyboard = False
 ```
  
-This will change the flow of the code so that it now will read from the topic '/teleopkeys' and control the robot accordingly. Now all you need to do is to open a new terminal and run the Flatland world again. However, before that, do not forget that you might need to run some of the commands from [this section](#building-and-installing-dependencies) again.
+This will change the flow of the code so that it now will read from the topic '/teleopkeys' and control the robot accordingly. Now all you need to do is to open a new terminal and run the Flatland world again. However, before that, do not forget that you might need to run some of the commands from [this section](#building-and-installing-dependencies) again. In particular, you will need to rebuild the workspace:
+```
+colcon build
+```
 
 If everything is working, you should be able to control the robot using the arrow or the WASD keys. All the plugins are still being used. If you get too close to a wall, a warning message appears on the terminal and the robot moves slower. If you collide with a wall you go back to the original position.
 
