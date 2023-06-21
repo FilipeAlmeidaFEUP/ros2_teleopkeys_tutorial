@@ -221,7 +221,7 @@ Flatland configures its worlds through the use of YAML files. These files follow
 
 The [world.yaml](world/world.yaml) file is where the Flatland world is configured and is sourced directly by the launch file. 
 
-To understand this file, you need to be familiar with the concept of layers. This makes Flatland essentially a 2.5D simulator since each layer can contain different components of the world that work independently in terms of physics. This means objects in different layers won't collide with each other. The world file can configure up to 16 layers and each of them is configured in their [own file](#layer-file). 
+To understand this file, you need to be familiar with the concept of layers. This makes Flatland essentially a 2.5D simulator since each layer can contain different components of the world that work independently in terms of physics. This means objects in different layers won't collide with each other. The world file can configure up to 16 layers. 
 
 There is also a list of models that are included in the world. Each one needs a name, the initial position and their [own configuration file](#model-file)
 
@@ -229,7 +229,7 @@ For more information on how to configure this file go to the [configuring world 
 
 #### Layer file
 
-In this package, there is only one layer, configured in the file [maze.yaml](world/maze.yaml). This configuration works by taking an image ([maze.png](world/maze.png)) and using a threshold to turn it into a binary image. It then builds a map by placing walls where the image transitions from 0 to 1 or 1 to 0.
+In this package, there is only one layer file ([maze.yaml](world/maze.yaml)). This configuration works by taking an image ([maze.png](world/maze.png)) and using a threshold to turn it into a binary image. It then builds a map by placing walls where the image transitions from 0 to 1 or 1 to 0.
 
 Another possible configuration for this file is to manually define line segments in a .dat file and use it to define the walls of the map.
 
