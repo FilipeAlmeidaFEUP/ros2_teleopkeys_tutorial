@@ -173,7 +173,7 @@ ros2 topic echo topic_name
 
 #### RViz file
 
-The window that contains the Flatland worl is configured by the RViz plugin, [a visualization tool for ROS](https://github.com/ros2/rviz) in the [robot_navigation.rviz](rviz/robot_navigation.rviz) file. To keep things simple, you can keep this file mostly unchanged, except when you need to add a new model or a new layer to your world (more about Flatland models and layers in the [next section](#flatland)). Inside the list `Visualization Manager/Displays` you need the entries:
+The window that contains the Flatland world is configured by the RViz plugin, [a visualization tool for ROS](https://github.com/ros2/rviz) in the [robot_navigation.rviz](rviz/robot_navigation.rviz) file. To keep things simple, you can keep this file mostly unchanged, except when you need to add a new model or a new layer to your world (more about Flatland models and layers in the [next section](#flatland)). Inside the list `Visualization Manager/Displays` you need the entries:
 
 ``` 
 # for each model in the world
